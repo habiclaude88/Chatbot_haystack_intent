@@ -56,24 +56,6 @@ from haystack.pipelines import ExtractiveQAPipeline
 pipe = ExtractiveQAPipeline(reader, retriever)
 
 
-#Ask the question
-prediction = pipe.run(
-    query=question, params={"Retriever": {"top_k": 10}, "Reader": {"top_k": 10}}
-)
-
-
-if prediction['answers'][0].to_dict()['score'] <= 0.6:
-  print('No Answer')
-  answer = 'No Answer'
-else:
-  print(prediction['answers'][0].to_dict()['answer'])
-  answer = prediction['answers'][0].to_dict()['answer']
-
-
-from pprint import pprint
-
-pprint(prediction)
-
 
 def get_answer(q):
   prediction = pipe.run(
@@ -86,10 +68,6 @@ def get_answer(q):
 from easynmt import EasyNMT
 
 model = EasyNMT('OPUS-MT')
-
-question = model.translate(raw_query, source_lang=lang, target_lang='en')
-
-answer = model.translate(answer, source_lang='en', target_lang=lang)
 
 
 
