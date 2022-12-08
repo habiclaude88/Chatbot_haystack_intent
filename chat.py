@@ -51,7 +51,7 @@ def get_response(msg):
                 answer = hay.answer(msg)
                 return answer
     
-    return "I do not understand..."
+    return hay.answer(msg)
 
 
 if __name__ == "__main__":
