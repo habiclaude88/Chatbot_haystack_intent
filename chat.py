@@ -1,6 +1,6 @@
 import random
 import json
-import haystack
+import hay
 import torch
 
 from model import NeuralNet
@@ -45,7 +45,7 @@ def get_response(msg):
             if tag == intent["tag"] and intent['tag'] != 'haystack':
                 return random.choice(intent['responses'])
             elif tag == intent["tag"]:
-                answer = haystack.answer(msg)
+                answer = hay.answer(msg)
                 return answer
     
     return "I do not understand..."
