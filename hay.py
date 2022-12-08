@@ -59,7 +59,7 @@ pipe = ExtractiveQAPipeline(reader, retriever)
 
 def get_answer(q):
   prediction = pipe.run(
-      query=question, params={"Retriever": {"top_k": 10}, "Reader": {"top_k": 1}}
+      query=q, params={"Retriever": {"top_k": 10}, "Reader": {"top_k": 1}}
   )
   return prediction
 
@@ -80,8 +80,8 @@ print(lang)
 
 def answering(qs):
     # detecting the language
-    raw_query = "Was ist die vollständige Form von BRD?"
-    lang = detect(raw_query)
+    raw_query = qs
+    lang = detect(qs)
 
     # translating the question
     question = model.translate(raw_query, source_lang=lang, target_lang='en')
