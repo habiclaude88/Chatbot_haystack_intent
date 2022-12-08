@@ -1,6 +1,6 @@
 import random
 import json
-
+import haystack
 import torch
 
 from model import NeuralNet
@@ -42,11 +42,11 @@ def get_response(msg):
     prob = probs[0][predicted.item()]
     if prob.item() > 0.75:
         for intent in intents['intents']:
-            if tag == intent["tag"] and intent['tag'] != 'age':
+            if tag == intent["tag"] and intent['tag'] != 'haystack':
                 return random.choice(intent['responses'])
-            elif tag == intent["tag"] and intent['tag'] == 'age':
-                print(msg,'---------')
-                return "You are " + str(random.randint(18, 100)) + " years old"
+            elif tag == intent["tag"]:
+                answer = haystack.answer(msg)
+                return answer
     
     return "I do not understand..."
 
