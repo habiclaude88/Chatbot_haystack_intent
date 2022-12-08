@@ -47,6 +47,9 @@ def get_response(msg):
             elif tag == intent["tag"] and intent['tag'] == 'haystack':
                 answer = hay.answer(msg)
                 return answer
+            else:
+                answer = hay.answer(msg)
+                return answer
     
     return "I do not understand..."
 
