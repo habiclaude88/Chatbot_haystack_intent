@@ -23,3 +23,4 @@ Werkzeug==2.2.2
 zipp==3.11.0
 easynmt
 langdetect
+git+https://github.com/deepset-ai/haystack.git#egg=farm-haystack[colab] 
