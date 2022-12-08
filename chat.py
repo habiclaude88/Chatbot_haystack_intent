@@ -44,7 +44,7 @@ def get_response(msg):
         for intent in intents['intents']:
             if tag == intent["tag"] and intent['tag'] != 'haystack':
                 return random.choice(intent['responses'])
-            elif tag == intent["tag"]:
+            elif tag == intent["tag"] and intent['tag'] == 'haystack':
                 answer = hay.answer(msg)
                 return answer
     
