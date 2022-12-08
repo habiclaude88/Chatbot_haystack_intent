@@ -87,14 +87,14 @@ def answering(qs):
     question = model.translate(raw_query, source_lang=lang, target_lang='en')
 
     # get the answer
-    answer = get_answer(question) 
+    response = get_answer(question) 
 
-    answer = answer['answers'][0].to_dict()['answer']
+    answer = response['answers'][0].to_dict()['answer']
 
     # translate back to original language
     answer = model.translate(answer, source_lang='en', target_lang=lang)
     # return answer
-    if answer['answers'][0].to_dict()['score'] <= 0.6:
+    if response['answers'][0].to_dict()['score'] <= 0.6:
       print('No Answer')
       answer = 'No Answer'
 
