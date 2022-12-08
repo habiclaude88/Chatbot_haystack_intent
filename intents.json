@@ -83,12 +83,12 @@
     {
       "tag": "haystack",
       "patterns": [
-        "how old am I if I was born in 1990",
-        "I was born in 1990, how old am I?",
-        "My year of birth is 1990, how old am I?"
+        "Haystack what is?",
+        "Please Haystack what is?",
+        "Haystack help me find the info on?"
       ],
       "responses": [
-        "You are years old"
+        "Hello"
       ]
     }
   ]
