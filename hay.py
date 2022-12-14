@@ -61,6 +61,7 @@ def get_answer(q):
   prediction = pipe.run(
       query=q, params={"Retriever": {"top_k": 10}, "Reader": {"top_k": 1}}
   )
+  print(prediction)
   return prediction
 
 
@@ -81,7 +82,7 @@ print(lang)
 def answering(qs):
     # detecting the language
     raw_query = qs
-    lang = detect(qs)
+    lang = detect(qs) #DETECT LANGUAGE
 
     # translating the question
     question = model.translate(raw_query, source_lang=lang, target_lang='en')
@@ -95,7 +96,6 @@ def answering(qs):
     answer = model.translate(answer, source_lang='en', target_lang=lang)
     # return answer
     if response['answers'][0].to_dict()['score'] <= 0.6:
-      print('No Answer')
       answer = 'No Answer'
 
       answer = model.translate(answer, source_lang='en', target_lang=lang)

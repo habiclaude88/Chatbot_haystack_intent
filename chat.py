@@ -41,6 +41,12 @@ def get_response(msg):
     probs = torch.softmax(output, dim=1)
     prob = probs[0][predicted.item()]
     if prob.item() > 0.75:
+    #     for intent in intents['intents']:
+    #         if tag == intent["tag"]:
+    #             print(f"{bot_name}: {random.choice(intent['responses'])}")
+    # else:
+    #     print(f"{bot_name}: I do not understand...")
+
         for intent in intents['intents']:
             if tag == intent["tag"] and intent['tag'] != 'haystack':
                 return random.choice(intent['responses'])
@@ -51,7 +57,7 @@ def get_response(msg):
                 answer = hay.answering(msg)
                 return answer
     
-    return hay.answering(msg)
+
 
 
 if __name__ == "__main__":
