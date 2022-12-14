@@ -17,16 +17,10 @@ document_store = InMemoryDocumentStore()
 
 
 
-df = pd.read_csv('https://raw.githubusercontent.com/Ngabo-bajo/NLP-FELLOWSHIP/main/jobinRwanda.csv')
+df = pd.read_csv('https://raw.githubusercontent.com/habiclaude88/NLP-FELLOWSHIP/main/scrapped_data2.csv')
 
-df.iloc[1]['Job Full Info'].split('\n')
-
-job_dir = 'jobs'
-
-df_len = len(df) #Counts of rows in the Dataframe
-for index in range(df_len):
-  with open(f'{job_dir}/job_{index}.txt', 'w+') as file:
-    file.writelines(df.iloc[index]['Job Full Info'].split('.'))
+with open(f'info/web.txt', 'w+') as file:
+  file.writelines('\n'.join(list(df.iloc['description'])))
 
 
 from haystack.utils import clean_wiki_text, convert_files_to_docs, fetch_archive_from_http
