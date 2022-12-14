@@ -8,5 +8,4 @@ torch
 torchvision
 tqdm==4.64.1
 typing_extensions==4.4.0
-easynmt
 langdetect
