@@ -27,8 +27,38 @@ model.eval()
 
 bot_name = "Sam"
 
+
+import requests
+import json
+
+
+class translator:
+    api_url = "https://translate.googleapis.com/translate_a/single"
+    client = "?client=gtx&dt=t"
+    dt = "&dt=t"
+
+    #fROM English to Kinyarwanda
+    def translate(text : str , target_lang : str, source_lang : str):
+        sl = f"&sl={source_lang}"
+        tl = f"&tl={target_lang}"
+        r = requests.get(translator.api_url+ translator.client + translator.dt + sl + tl + "&q=" + text)
+        return json.loads(r.text)[0][0][0]
+
+from langdetect import detect
+
+def process_question(text : str):
+
+  source_lang = detect(text)
+  resp = translator.translate(text=text, target_lang='en', source_lang=source_lang)
+  return resp, source_lang
+
+def process_answer(text : str, source_lang):
+  resp = translator.translate(text=text, target_lang=source_lang, source_lang='en')
+  return resp
+
 def get_response(msg):
-    sentence = tokenize(msg)
+    qr, sl = process_question(msg)
+    sentence = tokenize(qr)
     X = bag_of_words(sentence, all_words)
     X = X.reshape(1, X.shape[0])
     X = torch.from_numpy(X).to(device)
@@ -41,20 +71,14 @@ def get_response(msg):
     probs = torch.softmax(output, dim=1)
     prob = probs[0][predicted.item()]
     if prob.item() > 0.75:
-    #     for intent in intents['intents']:
-    #         if tag == intent["tag"]:
-    #             print(f"{bot_name}: {random.choice(intent['responses'])}")
-    # else:
-    #     print(f"{bot_name}: I do not understand...")
-
         for intent in intents['intents']:
             if tag == intent["tag"] and intent['tag'] != 'haystack':
-                return random.choice(intent['responses'])
+                return process_answer(random.choice(intent['responses']), source_lang=sl)
             elif tag == intent["tag"] and intent['tag'] == 'haystack':
-                answer = hay.answering(msg)
+                answer = process_answer(hay.answering(msg), source_lang=sl)
                 return answer
             else:
-                answer = hay.answering(msg)
+                answer = process_answer(hay.answering(msg), source_lang=sl)
                 return answer
     
 
