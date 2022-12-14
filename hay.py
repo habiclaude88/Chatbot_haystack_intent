@@ -17,7 +17,7 @@ document_store = InMemoryDocumentStore()
 
 
 
-df = pd.read_csv('https://raw.githubusercontent.com/habiclaude88/NLP-FELLOWSHIP/main/scrapped_data2.csv')
+df = pd.read_csv('https://raw.githubusercontent.com/habiclaude88/NLP-FELLOWSHIP/main/data.csv')
 
 with open(f'info/web.txt', 'w+') as file:
   file.writelines('\n'.join(list(df.iloc['haystack'])))
