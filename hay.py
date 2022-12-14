@@ -20,7 +20,7 @@ document_store = InMemoryDocumentStore()
 df = pd.read_csv('https://raw.githubusercontent.com/habiclaude88/NLP-FELLOWSHIP/main/scrapped_data2.csv')
 
 with open(f'info/web.txt', 'w+') as file:
-  file.writelines('\n'.join(list(df.iloc['description'])))
+  file.writelines('\n'.join(list(df.iloc['haystack'])))
 
 
 from haystack.utils import clean_wiki_text, convert_files_to_docs, fetch_archive_from_http
