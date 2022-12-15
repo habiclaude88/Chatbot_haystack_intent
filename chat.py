@@ -74,12 +74,14 @@ def get_response(msg):
         for intent in intents['intents']:
             if tag == intent["tag"] and intent['tag'] != 'haystack':
                 return process_answer(random.choice(intent['responses']), source_lang=sl)
-            elif tag == intent["tag"] and intent['tag'] == 'haystack':
-                answer = process_answer(hay.answering(msg), source_lang=sl)
-                return answer
+            # elif tag == intent["tag"] and intent['tag'] == 'haystack':
+            #     answer = process_answer(hay.answering(msg), source_lang=sl)
+            #     return answer
+            # else:
+            #     answer = process_answer(hay.answering(msg), source_lang=sl)
+            #     return answer
             else:
-                answer = process_answer(hay.answering(msg), source_lang=sl)
-                return answer
+                return "I do not understand!"
     
 
 
