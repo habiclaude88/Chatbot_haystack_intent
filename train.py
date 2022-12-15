@@ -1,4 +1,4 @@
-import numpy as np
+import nuchatmpy as np
 import random
 import json
 

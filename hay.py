@@ -19,8 +19,10 @@ document_store = InMemoryDocumentStore()
 
 df = pd.read_csv('https://raw.githubusercontent.com/habiclaude88/NLP-FELLOWSHIP/main/data.csv')
 
-with open(f'info/web.txt', 'w+') as file:
-  file.writelines('\n'.join(list(df.iloc['haystack'])))
+df['description'] = df['title'] + ' ' + df['link']
+
+with open(f'jobs/web.txt', 'w+') as file:
+  file.writelines(list(df['description']))
 
 
 from haystack.utils import clean_wiki_text, convert_files_to_docs, fetch_archive_from_http
