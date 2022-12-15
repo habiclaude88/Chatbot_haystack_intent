@@ -9,56 +9,56 @@ logging.basicConfig(format="%(levelname)s - %(name)s -  %(message)s", level=logg
 logging.getLogger("haystack").setLevel(logging.INFO)
 
 
-# In-Memory Document Store
-from haystack.document_stores import InMemoryDocumentStore
+# # In-Memory Document Store
+# from haystack.document_stores import InMemoryDocumentStore
 
-#Store the text on the RAM Memory
-document_store = InMemoryDocumentStore()
-
-
-
-df = pd.read_csv('https://raw.githubusercontent.com/habiclaude88/NLP-FELLOWSHIP/main/data.csv')
-
-df['description'] = df['title'] + ' ' + df['link']
-
-with open(f'jobs/web.txt', 'w+') as file:
-  file.writelines(list(df['description']))
-
-
-from haystack.utils import clean_wiki_text, convert_files_to_docs, fetch_archive_from_http
-
-
-#Download the data and clean it
-docs = convert_files_to_docs(dir_path=job_dir, clean_func=clean_wiki_text, split_paragraphs=True)
-
-
-#Store the data into the database
-document_store.write_documents(docs)
-
-# An in-memory TfidfRetriever based on Pandas dataframes
-from haystack.nodes import TfidfRetriever
-
-retriever = TfidfRetriever(document_store=document_store)
-
-from haystack.nodes import FARMReader
-
-#Download and initiate the model
-reader = FARMReader(model_name_or_path="deepset/roberta-base-squad2", use_gpu=True)
-
-
-#Bundle together the model and retriver(Which is the extractor)
-from haystack.pipelines import ExtractiveQAPipeline
-
-pipe = ExtractiveQAPipeline(reader, retriever)
+# #Store the text on the RAM Memory
+# document_store = InMemoryDocumentStore()
 
 
 
-def get_answer(q):
-  prediction = pipe.run(
-      query=q, params={"Retriever": {"top_k": 10}, "Reader": {"top_k": 1}}
-  )
-  print(prediction)
-  return prediction
+# df = pd.read_csv('https://raw.githubusercontent.com/habiclaude88/NLP-FELLOWSHIP/main/data.csv')
+
+# df['description'] = df['title'] + ' ' + df['link']
+
+# with open(f'jobs/web.txt', 'w+') as file:
+#   file.writelines(list(df['description']))
+
+
+# from haystack.utils import clean_wiki_text, convert_files_to_docs, fetch_archive_from_http
+
+
+# #Download the data and clean it
+# docs = convert_files_to_docs(dir_path=job_dir, clean_func=clean_wiki_text, split_paragraphs=True)
+
+
+# #Store the data into the database
+# document_store.write_documents(docs)
+
+# # An in-memory TfidfRetriever based on Pandas dataframes
+# from haystack.nodes import TfidfRetriever
+
+# retriever = TfidfRetriever(document_store=document_store)
+
+# from haystack.nodes import FARMReader
+
+# #Download and initiate the model
+# reader = FARMReader(model_name_or_path="deepset/roberta-base-squad2", use_gpu=True)
+
+
+# #Bundle together the model and retriver(Which is the extractor)
+# from haystack.pipelines import ExtractiveQAPipeline
+
+# pipe = ExtractiveQAPipeline(reader, retriever)
+
+
+
+# def get_answer(q):
+#   prediction = pipe.run(
+#       query=q, params={"Retriever": {"top_k": 10}, "Reader": {"top_k": 1}}
+#   )
+#   print(prediction)
+#   return prediction
 
 
 
